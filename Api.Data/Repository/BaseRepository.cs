@@ -20,9 +20,26 @@ namespace Api.Data.Repository
             _dataset = _context.Set<T>();
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Entity = await _dataset.SingleOrDefaultAsync(u => u.Id == id);
+                if (Entity == null)
+                {
+                    return false;
+                }
+                _dataset.Remove(Entity);
+                await _context.SaveChangesAsync();
+            
+                return true;
+
+            }
+            catch (Exception erro)
+            {
+
+                throw new Exception($"Um erro ocorreu. Detalhes: {erro}");
+            }
         }
 
         public async Task<T> InsertAsync(T item)
@@ -38,25 +55,44 @@ namespace Api.Data.Repository
                 _dataset.Add(item);
 
                 await _context.SaveChangesAsync();
-                
+
             }
             catch (Exception erro)
             {
-                throw erro;
+                throw new Exception($"Um erro ocorreu. Detalhes: {erro}");
             }
-            
+
             return item;
 
         }
 
-        public Task<T> SelectAsync(Guid id)
+        public async Task<T> SelectAsync(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var item = await _dataset.SingleOrDefaultAsync(u => u.Id == id);
+                 if (item != null)
+            {
+                return item;
+            }
+             throw new Exception("Nenhum item encontrado com o ID fornecido.");
+            }
+            catch (Exception erro)
+            {
+                  throw new Exception($"Um erro ocorreu. Detalhes: {erro}");           
+            }
         }
 
-        public Task<IEnumerable<T>> SelectAsync()
+        public async Task<IEnumerable<T>> SelectAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _dataset.ToListAsync();
+            }
+            catch (Exception erro)
+            {          
+                throw new Exception($"Um erro ocorreu. Detalhes: {erro}");
+            }
         }
 
         public async Task<T> UpdateAsync(T item)
@@ -71,14 +107,14 @@ namespace Api.Data.Repository
 
                 item.UpdateAt = DateTime.UtcNow;
                 item.CreateAt = ExisteT.CreateAt;
+              
                 _context.Entry(ExisteT).CurrentValues.SetValues(item);
                 await _context.SaveChangesAsync();
 
             }
             catch (Exception erro)
             {
-
-                throw erro;
+                  throw new Exception($"Um erro ocorreu. Detalhes: {erro}");
             }
             return item;
         }
