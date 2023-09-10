@@ -31,7 +31,7 @@ namespace Api.Data.Repository
                 }
                 _dataset.Remove(Entity);
                 await _context.SaveChangesAsync();
-            
+
                 return true;
 
             }
@@ -71,15 +71,15 @@ namespace Api.Data.Repository
             try
             {
                 var item = await _dataset.SingleOrDefaultAsync(u => u.Id == id);
-                 if (item != null)
-            {
-                return item;
-            }
-             throw new Exception("Nenhum item encontrado com o ID fornecido.");
+                if (item != null)
+                {
+                    return item;
+                }
+                throw new Exception("Nenhum item encontrado com o ID fornecido.");
             }
             catch (Exception erro)
             {
-                  throw new Exception($"Um erro ocorreu. Detalhes: {erro}");           
+                throw new Exception($"Um erro ocorreu. Detalhes: {erro}");
             }
         }
 
@@ -90,7 +90,7 @@ namespace Api.Data.Repository
                 return await _dataset.ToListAsync();
             }
             catch (Exception erro)
-            {          
+            {
                 throw new Exception($"Um erro ocorreu. Detalhes: {erro}");
             }
         }
@@ -107,14 +107,14 @@ namespace Api.Data.Repository
 
                 item.UpdateAt = DateTime.UtcNow;
                 item.CreateAt = ExisteT.CreateAt;
-              
+
                 _context.Entry(ExisteT).CurrentValues.SetValues(item);
                 await _context.SaveChangesAsync();
 
             }
             catch (Exception erro)
             {
-                  throw new Exception($"Um erro ocorreu. Detalhes: {erro}");
+                throw new Exception($"Um erro ocorreu. Detalhes: {erro}");
             }
             return item;
         }
