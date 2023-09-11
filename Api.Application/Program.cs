@@ -1,11 +1,22 @@
+using Api.CrossCutting.DependencyInjection;
+
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+ConfigureService.ConfiguracaoDependenciaService(builder.Services);
+ConfigureRepository.ConfiguracaoDependenciaRepositorio(builder.Services);
+
+// O AddDbContext foi colocado também na ConfigureRepository simplesmenta para não deixarmos aqui na Application!
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 
 var app = builder.Build();
 
