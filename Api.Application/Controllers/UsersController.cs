@@ -25,7 +25,7 @@ namespace Api.Application.Controllers
         public async Task<IActionResult> GetAll()
         {
             if (!ModelState.IsValid)
-            {
+            { 
                 return BadRequest(ModelState); //Cód 400 - Solicitação inválida!
             }
             try
