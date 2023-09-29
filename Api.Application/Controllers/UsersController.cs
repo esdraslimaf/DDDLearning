@@ -34,12 +34,12 @@ namespace Api.Application.Controllers
             }
             catch (ArgumentException erro)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, erro.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, erro.Message); // Erro interno do servidor (500)
             }
         }
 
         [HttpGet] // Poderia ser apenas [HttpGet("{id}")] para fazer de forma resumida
-        [Route("{id}", Name = "GetById")] /*no Name estamos noemando nossa url. Exemplo: var link = $"localhost:3000/livros/{livro.Id}"; é nossa rota comum, podemos nomear ela
+        [Route("{id}", Name = "GetById")] /*no Name estamos nomeando nossa url. Exemplo: var link = $"localhost:3000/livros/{livro.Id}"; é nossa rota comum, podemos nomea-la
         então nomeada poderíamos fazer: var link = Url.RouteUrl("GetById", new { id = livro.Id });  vamos usar isso no método post para entender*/
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -69,7 +69,7 @@ namespace Api.Application.Controllers
                 var userRetornado = await _service.Post(user);
                 if (userRetornado != null)
                 {
-                    return Created(new Uri(Url.Link("GetById", new { id = user.Id })), user);
+                    return Created(new Uri(Url.Link("GetById", new { id = userRetornado.Id })), userRetornado);
                 }
                 else
                 {
@@ -85,6 +85,7 @@ namespace Api.Application.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] UserEntity user)
         {
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -105,6 +106,8 @@ namespace Api.Application.Controllers
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, erro.Message);
             }
+
+
         }
 
         [HttpDelete("{id}")]
@@ -115,7 +118,7 @@ namespace Api.Application.Controllers
 
             try
             {
-               return Ok(_service.Delete(id));
+               return Ok(await _service.Delete(id));
             }
             catch (ArgumentException erro)
             {

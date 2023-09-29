@@ -6,7 +6,7 @@ using Api.Domain.Entities;
 
 namespace Api.Domain.Interfaces
 {
-    public interface IRepository<T> where T : BaseEntity // Interface genérica onde T = BaseEntity(Qualquer que herde de BaseEntity)
+    public interface IRepository<T> where T:BaseEntity // Interface genérica onde T = BaseEntity(Qualquer que herde de BaseEntity)
     { //Métodos assincronos 
         Task<T> InsertAsync(T item); //Inserir
         Task<T> UpdateAsync(T item); //Atualizar

@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 ConfigureService.ConfiguracaoDependenciaService(builder.Services);
 ConfigureRepository.ConfiguracaoDependenciaRepositorio(builder.Services);
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo

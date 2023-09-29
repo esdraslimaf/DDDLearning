@@ -11,8 +11,8 @@ namespace Api.Data.Repository
 {
     public class BaseRepository<T> : IRepository<T> where T : BaseEntity
     {
-        protected readonly MyContext _context;
-        private DbSet<T> _dataset; //Pra não ter que ficar fazendo por exemplo: _context.Set<T>().ToList(); toda vez que necessário(.ToList também  é apenas exemplo da operação, pdoe ser delete, etc).
+        private readonly MyContext _context;
+        private readonly DbSet<T> _dataset;
 
         public BaseRepository(MyContext context)
         {
@@ -41,7 +41,6 @@ namespace Api.Data.Repository
                 throw new Exception($"Um erro ocorreu. Detalhes: {erro}");
             }
         }
-
         public async Task<T> InsertAsync(T item)
         {
             try
@@ -118,7 +117,5 @@ namespace Api.Data.Repository
             }
             return item;
         }
-
-
     }
 }

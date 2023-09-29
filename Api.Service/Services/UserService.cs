@@ -22,7 +22,7 @@ namespace Api.Service.Services
  // podemos colocar essa regra dentro do método aqui na service para verificar se o user que chegou aqui possui tal requisito /\.
 
         public async Task<bool> Delete(Guid id)
-        {
+        {    
             return await _repository.DeleteAsync(id); //Await pra aguardar o método do repositório assíncrono ser concluído e receber o bool
         }
 
