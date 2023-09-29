@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Data.Context;
+using Api.Data.Implementations;
 using Api.Data.Repository;
 using Api.Domain.Interfaces;
+using Api.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +19,7 @@ namespace Api.CrossCutting.DependencyInjection
         public static void ConfiguracaoDependenciaRepositorio(IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>)); //Scoped pq uma conexão com banco tem que ser scoped
-                                                                                          //A utilização de typeof é necessária porque estamos trabalhando com tipos genéricos e desejamos registrar uma dependência genérica no contêiner de injeção de dependência (DI).
+            serviceCollection.AddScoped<IUserRepository, UserImplementation>();   //A utilização de typeof é necessária porque estamos trabalhando com tipos genéricos e desejamos registrar uma dependência genérica no contêiner de injeção de dependência (DI).
 
             serviceCollection.AddDbContext<MyContext>(options =>
  {
