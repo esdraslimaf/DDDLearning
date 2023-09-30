@@ -1,7 +1,9 @@
 using Api.CrossCutting.DependencyInjection;
-
+using Api.Domain.Security;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 ConfigureService.ConfiguracaoDependenciaService(builder.Services);
 ConfigureRepository.ConfiguracaoDependenciaRepositorio(builder.Services);
+
+ var signingConfigurations = new SigningConfigurations();
+            builder.Services.AddSingleton(signingConfigurations);
+
+            var tokenConfigurations = new TokenConfigurations(); 
+            new ConfigureFromConfigurationOptions<TokenConfigurations>( 
+                builder.Configuration.GetSection("TokenConfigurations")) //Aqui o objeto TokenConfiguration será preenchido com o appsettings(TokenConfigurations).
+                     .Configure(tokenConfigurations);
+            builder.Services.AddSingleton(tokenConfigurations);
 
 builder.Services.AddSwaggerGen(c =>
 {
