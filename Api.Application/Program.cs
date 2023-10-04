@@ -14,14 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 ConfigureService.ConfiguracaoDependenciaService(builder.Services);
 ConfigureRepository.ConfiguracaoDependenciaRepositorio(builder.Services);
 
- var signingConfigurations = new SigningConfigurations();
-            builder.Services.AddSingleton(signingConfigurations);
+var signingConfigurations = new SigningConfigurations();
+builder.Services.AddSingleton(signingConfigurations);
 
-            var tokenConfigurations = new TokenConfigurations(); 
-            new ConfigureFromConfigurationOptions<TokenConfigurations>( 
-                builder.Configuration.GetSection("TokenConfigurations")) //Aqui o objeto TokenConfiguration será preenchido com o appsettings(TokenConfigurations).
-                     .Configure(tokenConfigurations);
-            builder.Services.AddSingleton(tokenConfigurations);
+var tokenConfigurations = new TokenConfigurations();
+new ConfigureFromConfigurationOptions<TokenConfigurations>(
+    builder.Configuration.GetSection("TokenConfigurations")) //Aqui o objeto TokenConfiguration será preenchido com o appsettings(TokenConfigurations).
+         .Configure(tokenConfigurations);
+builder.Services.AddSingleton(tokenConfigurations);
 
 builder.Services.AddAuthentication(authOptions =>
             {
@@ -46,14 +46,14 @@ builder.Services.AddAuthentication(authOptions =>
                 paramsValidation.ClockSkew = TimeSpan.Zero;
             });
 
-            // Ativa o uso do token como forma de autorizar o acesso
-            // a recursos deste projeto
-            builder.Services.AddAuthorization(auth =>
-            {
-                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
-                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
-                    .RequireAuthenticatedUser().Build());
-            });
+// Ativa o uso do token como forma de autorizar o acesso
+// a recursos deste projeto
+builder.Services.AddAuthorization(auth =>
+{
+    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
+        .RequireAuthenticatedUser().Build());
+});
 
 
 builder.Services.AddSwaggerGen(c =>
@@ -70,6 +70,26 @@ builder.Services.AddSwaggerGen(c =>
             Url = new Uri("https://www.linkedin.com/in/esdrasdev/")
         }
     });
+    //Vai adicionar o botão no middleware
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Insirir o Token JWT",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    //Vai fazer o botão funcionar
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        new OpenApiSecurityScheme {
+                            Reference = new OpenApiReference {
+                                Id = "Bearer",
+                                Type = ReferenceType.SecurityScheme
+                            }
+                        }, new List<string>()
+                    }
+                });
 });
 // Adicionamos o Swagger, mais abaixo estamos realizando sua configuração
 
