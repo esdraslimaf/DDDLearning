@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Api.Domain.Entities;
 using Api.Domain.Interfaces.Services.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Application.Controllers
@@ -21,6 +22,7 @@ namespace Api.Application.Controllers
             _service = service;
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -38,6 +40,7 @@ namespace Api.Application.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet] // Poderia ser apenas [HttpGet("{id}")] para fazer de forma resumida
         [Route("{id}", Name = "GetById")] /*no Name estamos nomeando nossa url. Exemplo: var link = $"localhost:3000/livros/{livro.Id}"; é nossa rota comum, podemos nomea-la
         então nomeada poderíamos fazer: var link = Url.RouteUrl("GetById", new { id = livro.Id });  vamos usar isso no método post para entender*/
@@ -57,6 +60,7 @@ namespace Api.Application.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserEntity user)
         {
@@ -82,6 +86,8 @@ namespace Api.Application.Controllers
             }
         }
 
+
+        [Authorize("Bearer")]
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] UserEntity user)
         {
@@ -110,6 +116,8 @@ namespace Api.Application.Controllers
 
         }
 
+
+        [Authorize("Bearer")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id){
             if(!ModelState.IsValid){
