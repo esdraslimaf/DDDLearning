@@ -27,7 +27,7 @@ namespace Api.Application.Controllers
         public async Task<IActionResult> GetAll()
         {
             if (!ModelState.IsValid)
-            { 
+            {
                 return BadRequest(ModelState); //Cód 400 - Solicitação inválida!
             }
             try
@@ -91,7 +91,7 @@ namespace Api.Application.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] UserEntity user)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -119,14 +119,16 @@ namespace Api.Application.Controllers
 
         [Authorize("Bearer")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id){
-            if(!ModelState.IsValid){
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
             try
             {
-               return Ok(await _service.Delete(id));
+                return Ok(await _service.Delete(id));
             }
             catch (ArgumentException erro)
             {
