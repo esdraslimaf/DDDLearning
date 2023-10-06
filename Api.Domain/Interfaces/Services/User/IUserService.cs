@@ -12,8 +12,8 @@ namespace Api.Domain.Interfaces.Services.User
         //No método estou utilizando nomeclaturas que lembrem aos verbos HTTP para ficar mais didático
         Task<UserDto> Get(Guid id); //Buscará o usuário
         Task<IEnumerable<UserDto>> GetAll(); //Buscará todos os usuários
-        Task<UserDtoCreateResult> Post(UserDto user); //Irá adicionar o usuário
-        Task<UserDtoUpdateResult> Put(UserDto user); //Irá atualizar o usuário
+        Task<UserDtoCreateResult> Post(UserDtoCreate user); //Irá adicionar o usuário
+        Task<UserDtoUpdateResult> Put(UserDtoUpdate user); //Irá atualizar o usuário
         Task<bool> Delete(Guid id); //Deleta por id
     }
 } 

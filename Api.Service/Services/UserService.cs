@@ -45,7 +45,7 @@ namespace Api.Service.Services
             return _mapper.Map<IEnumerable<UserDto>>(entities);
         }
 
-        public async Task<UserDtoCreateResult> Post(UserDto user)
+        public async Task<UserDtoCreateResult> Post(UserDtoCreate user)
         {           
             // return await _repository.InsertAsync(user); //Await pra aguardar o método do repositório assíncrono ser concluído e receber o UserEntity
             var model = _mapper.Map<UserModel>(user);
@@ -62,7 +62,7 @@ namespace Api.Service.Services
             
         }
 
-        public async Task<UserDtoUpdateResult> Put(UserDto user)
+        public async Task<UserDtoUpdateResult> Put(UserDtoUpdate user)
         {
             //return await _repository.UpdateAsync(user); //Await pra aguardar o método do repositório assíncrono ser concluído e receber o UserEntity
             var model = _mapper.Map<UserModel>(user);

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Api.Domain.Dtos.User
 {
-    public class UserDto //Só precisamos do Nome e Email para esse UserDto baseado na UserEntity:BaseEntity
+   //Dto para criar o objeto na tabela Users
+    public class UserDtoCreate //Só precisamos do Nome e Email para esse UserDto baseado na UserEntity:BaseEntity
     {
         [Required(ErrorMessage = "Obrigatório inserir um nome!")]
         [StringLength(65, ErrorMessage = "Tamanho máximo permitido é de {1} caracteres.")]

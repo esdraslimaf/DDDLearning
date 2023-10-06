@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Api.Domain.Dtos.User
 {
+    //Dto para atualizar
     public class UserDtoUpdate
     {
+        [Required(ErrorMessage ="O campo Id é obrigatório!")]
+        public Guid Id { get; set; }
         [Required(ErrorMessage = "Obrigatório inserir um nome!")]
         [StringLength(65, ErrorMessage = "Tamanho máximo permitido é de {1} caracteres.")]
         public string Name { get; set; }
