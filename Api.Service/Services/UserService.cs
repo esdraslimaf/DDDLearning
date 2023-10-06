@@ -49,9 +49,16 @@ namespace Api.Service.Services
         {           
             // return await _repository.InsertAsync(user); //Await pra aguardar o método do repositório assíncrono ser concluído e receber o UserEntity
             var model = _mapper.Map<UserModel>(user);
+             //Acima convertemos o UserDto para UserModel(Inclusive é acima que a CreateAt é atribuido)
+
             var entity = _mapper.Map<UserEntity>(model);
+            //Acima convertemos UserModel para UserEntity
+
             var result = await _repository.InsertAsync(entity);
+
             return _mapper.Map<UserDtoCreateResult>(result);
+            //Acima convertemos result do repository(UserEntity) para UserDtoCreateResult
+            
             
         }
 
@@ -62,6 +69,8 @@ namespace Api.Service.Services
             var entity = _mapper.Map<UserEntity>(model);
             var result = await _repository.UpdateAsync(entity);
             return _mapper.Map<UserDtoUpdateResult>(result);
+
+        
         }
     }
 }
