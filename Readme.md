@@ -1,0 +1,3 @@
+- O botão "Authorize" no Swagger permite solicitar um Token JWT para autenticação. Esse token é gerado automaticamente quando você realiza um "login" na aplicação, especificamente ao acessar a rota da Controller "Login", desde que o e-mail fornecido esteja previamente registrado no banco de dados. O token é um mecanismo de segurança que verifica a identidade do usuário, concedendo acesso apenas a usuários autenticados. A geração automática do token na Controller "Login" é acionada como parte do processo de autenticação.
+
+![image](https://github.com/esdraslimaf/DDDLearning/assets/101669187/54d41754-17e2-44cb-887c-ef1b8f84b08c)
